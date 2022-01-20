@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "pages/enter.jsx", "components/Loading.jsx", "components/Navbar.jsx", "lib/context.js", "lib/firebase.js", "lib/hooks.js", "pages/[username]/index.jsx", "pages/admin/[slug].jsx", "pages/admin/index.jsx", "pages/_app.jsx", "pages/[username]/[slug].jsx", "pages/index.jsx", "components/PostContent.jsx", "components/PostFeed.jsx", "components/UserProfile.jsx", "pages/api/hello.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
