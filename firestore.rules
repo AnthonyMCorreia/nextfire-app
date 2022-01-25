@@ -34,13 +34,13 @@ service cloud.firestore {
         let username = request.resource.data.username; 
         let createdValidUsername = existsAfter(/databases/$(database)/documents/usernames/$(username));
 
-        return isOwner && createdValidUsername;
+        return isOwner && createdValidUsername
       }
 
       function isValidUsername(username) {
-        let isOwner = request.auth.uid == request.resourcce.data.uid;
+        let isOwner = request.auth.uid == request.resource.data.uid;
         let isValidLength = username.size() >= 3 && username.size() <= 15;
-        let isValidUserDoc = getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.usename == username;
+        let isValidUserDoc = getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.username == username;
 
         return isOwner && isValidLength && isValidUserDoc;
       }
@@ -50,7 +50,7 @@ service cloud.firestore {
         let isNow = request.time == request.resource.data.createdAt;
         let isValidContent = request.resource.data.content.size() < 20000 && request.resource.data.heartCount == 0;
         let username = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
-        let usernameMatches = username == request.resourcce.data.username;
+        let usernameMatches = username == request.resource.data.username;
 
         return isOwner && isNow && isValidContent && usernameMatches;
       }

@@ -1,5 +1,3 @@
-// /* eslint-disable @next/next/link-passhref */
-
 import Link from "next/link"
 
 export default function Page() {
@@ -13,7 +11,7 @@ export default function Page() {
 				frameBorder="0"
 				allowFullScreen
 				className="giphy-embed"></iframe>
-			<Link href="/">
+			<Link href="/" passHref>
 				<button className="btn-blue">Go home</button>
 			</Link>
 		</main>

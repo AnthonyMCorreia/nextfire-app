@@ -1,3 +1,4 @@
+
 import styles from "../../styles/Post.module.css"
 
 import { firestore, getUserWithUsername, postToJSON } from "../../lib/firebase"
@@ -78,7 +79,7 @@ export default function Post(props) {
 
 				<AuthCheck
 					fallback={
-						<Link href="/enter">
+						<Link href="/enter" passHref>
 							<button>❤️ Sign Up</button>
 						</Link>
 					}>

@@ -1,17 +1,20 @@
 import Image from "next/image"
 import { useContext, useEffect, useState, useCallback } from "react"
 import { UserContext } from "../lib/context"
+import Metatags from "../components/Metatags"
 
 import debounce from "lodash.debounce"
 
 import { auth, googleAuth, signInRedirect, firestore } from "../lib/firebase"
 import { doc, getDoc, writeBatch } from "firebase/firestore"
+import { signOut } from "firebase/auth"
 
 export default function EnterPage() {
 	const { user, username } = useContext(UserContext)
 
 	return (
 		<main>
+			<Metatags />
 			{user ? (
 				!username ? (
 					<>
@@ -71,7 +74,7 @@ function UsernameForm() {
 		params.preventDefault()
 
 		const userDoc = doc(firestore, "users", user.uid)
-		const usernameDoc = doc(firestore, "username", formValue)
+		const usernameDoc = doc(firestore, "usernames", formValue)
 
 		const batch = writeBatch(firestore)
 

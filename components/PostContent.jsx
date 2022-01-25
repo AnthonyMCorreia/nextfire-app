@@ -1,4 +1,3 @@
-// /* eslint-disable @next/next/link-passhref */
 
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
@@ -14,7 +13,7 @@ export default function Page({ post }) {
 			<h1>{post?.title}</h1>
 			<span className="text-sm">
 				Written By{" "}
-				<Link href={`/${post.username}`}>
+				<Link href={`/${post.username}`} passHref>
 					<a className="text-info">@{post.username}</a>
 				</Link>{" "}
 				on {createdAt.toISOString()}

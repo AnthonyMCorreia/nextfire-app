@@ -9,8 +9,11 @@ export default function Page({
 		<main>
 			<Head>
 				<title>{title}</title>
+				<link rel="icon" href={image} />
+				<meta name="description" content={description} />
+
 				<meta name="twitter:card" content="summary" />
-				<meta name="twitter:site" content="@fireship_nextfire" />
+				<meta name="twitter:site" content="@nextfire" />
 				<meta meta="twitter:title" content={title} />
 				<meta name="twitter:desciprtion" content={description} />
 				<meta name="twitter:image" content={image} />

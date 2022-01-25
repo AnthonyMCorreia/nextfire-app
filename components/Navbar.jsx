@@ -1,5 +1,3 @@
-// /* eslint-disable @next/next/link-passhref */
-
 import Link from "next/link"
 import Image from "next/image"
 import { useContext } from "react"
@@ -12,20 +10,20 @@ export default function Navbar(props) {
 		<nav className="navbar">
 			<ul>
 				<li>
-					<Link href="/">
+					<Link href="/" passHref>
 						<button className="btn-logo">FEED</button>
 					</Link>
 				</li>
 				{username && user && (
 					<>
 						<li className="push-left">
-							<Link href="/admin" >
+							<Link href="/admin" passHref>
 								<button className="btn-blue">Write Post</button>
 							</Link>
 						</li>
 						<li>
 							{user.photoURL ? (
-								<Link href={`/${username}`} >
+								<Link href={`/${username}`} passHref>
 									<Image
 										src={user?.photoURL}
 										width={45}
@@ -40,7 +38,7 @@ export default function Navbar(props) {
 
 				{!username && (
 					<li>
-						<Link href="/enter" >
+						<Link href="/enter" passHref>
 							<button className="btn-blue">Log In </button>
 						</Link>
 					</li>

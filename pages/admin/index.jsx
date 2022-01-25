@@ -83,7 +83,7 @@ function CreateNewPost() {
 			content: "Hello",
 			createdAt: serverTimestamp(),
 			updatedAt: serverTimestamp(),
-			hearCount: 0
+			heartCount: 0
 		}
 
 		await setDoc(postDoc, data)

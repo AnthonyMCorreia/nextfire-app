@@ -1,5 +1,3 @@
-// /* eslint-disable @next/next/link-passhref */
-
 import styles from "../../styles/Admin.module.css"
 import { firestore, auth, serverTimestamp } from "../../lib/firebase"
 import { collection, doc, updateDoc } from "firebase/firestore"
@@ -59,7 +57,7 @@ function PostManager() {
 					{preview ? "Edit" : "Preview"}
 				</button>
 				{post ? (
-					<Link href={`/${post.username}/${post.slug}`}>
+					<Link href={`/${post.username}/${post.slug}`} passHref>
 						<button className="btn-blue">Live view</button>
 					</Link>
 				) : null}

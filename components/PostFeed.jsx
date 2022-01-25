@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/link-passhref */
 
 import Link from "next/link"
 
@@ -21,7 +20,7 @@ export function PostItem({ post, admin }) {
 					<strong>By @{post.username}</strong>
 				</a>
 			</Link>
-			<Link href={`/${post.username}/${post.slug}`}>
+			<Link href={`/${post.username}/${post.slug}`} passHref>
 				<h2>
 					<a>{post.title}</a>
 				</h2>

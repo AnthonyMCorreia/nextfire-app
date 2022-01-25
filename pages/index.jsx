@@ -71,7 +71,7 @@ export default function Home(props) {
 	return (
 		<main styles={styles}>
 			<PostFeed posts={posts} admin={false} />
-			{!loading && !postsEnd ? (
+			{!loading && !postsEnd && posts.length > 0 ? (
 				<button onClick={getMorePosts}>Load More</button>
 			) : null}
 			<Loader show={loading} />
