@@ -125,7 +125,7 @@ function UsernameForm() {
 				setLoading(false)
 			}
 		}, 500),
-		[]
+		[getDoc, setIsValid, setLoading, firestore]
 	)
 
 	return (
