@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.css"
+// import "bootstrap/dist/css/bootstrap.css"
 import "../styles/globals.css"
 
 import Navbar from "../components/Navbar"
