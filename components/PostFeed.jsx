@@ -1,5 +1,7 @@
+import styles from "../styles/Admin.module.css"
 
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 export default function PostFeed({ posts, admin }) {
 	return posts
@@ -9,17 +11,44 @@ export default function PostFeed({ posts, admin }) {
 		: null
 }
 
-export function PostItem({ post, admin }) {
-	const wordCount = post?.content.trim().split(/\s+/g).length
-	const minutesToRead = (wordCount / 100 + 1).toFixed(0)
-
+function EditButton({ post }) {
 	return (
-		<div className="card">
+		<div className={styles.editBtnContainer}>
 			<Link href={`/${post.username}`}>
 				<a>
 					<strong>By @{post.username}</strong>
 				</a>
 			</Link>
+			<Link href={`/admin/${post.slug}`} passHref>
+				<button type="button" className="btn-sm">
+					Edit Post
+				</button>
+			</Link>
+		</div>
+	)
+}
+
+export function PostItem({ post }) {
+	const wordCount = post?.content.trim().split(/\s+/g).length
+	const minutesToRead = (wordCount / 100 + 1).toFixed(0)
+
+	const router = useRouter()
+	const isAdminPage = router.pathname === "/admin"
+
+	return (
+		<div className="card">
+			{isAdminPage ? (
+				<EditButton post={post} />
+			) : (
+				<div>
+					By{" "}
+					<Link href={`/${post.username}`}>
+						<a>
+							<strong>@{post.username}</strong>
+						</a>
+					</Link>
+				</div>
+			)}
 			<Link href={`/${post.username}/${post.slug}`} passHref>
 				<h2>
 					<a>{post.title}</a>
@@ -27,9 +56,12 @@ export function PostItem({ post, admin }) {
 			</Link>
 			<footer>
 				<span>
-					{wordCount} word. {minutesToRead} min read
+					{wordCount} word{wordCount !== 1 ? "s" : null}. {minutesToRead} min
+					read
 				</span>
-				<span className="push-left">💗 {post.hearCount} Hearts</span>
+				<span className="push-left">
+					❤️ {post.heartCount} Heart{post.heartCount !== 1 ? "s" : null}
+				</span>
 			</footer>
 		</div>
 	)

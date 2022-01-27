@@ -37,6 +37,7 @@ body {
 
 main {
 	padding: 1rem 10vw;
+	/* height: calc(100vh - 70px); */
 }
 
 h1 {
@@ -105,6 +106,7 @@ code {
 	align-items: center;
 	justify-content: space-between;
 	height: 100%;
+	width: 100%;
 }
 
 .navbar img {

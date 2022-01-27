@@ -1,3 +1,5 @@
+import styles from "../styles/Navbar.module.css"
+
 import Link from "next/link"
 import Image from "next/image"
 import { useContext } from "react"
@@ -15,10 +17,10 @@ export default function Navbar(props) {
 					</Link>
 				</li>
 				{username && user && (
-					<>
-						<li className="push-left">
+					<div className={styles.navContent}>
+						<li>
 							<Link href="/admin" passHref>
-								<button className="btn-blue">Write Post</button>
+								<button className="btn-blue">Your Posts</button>
 							</Link>
 						</li>
 						<li>
@@ -33,13 +35,13 @@ export default function Navbar(props) {
 								</Link>
 							) : null}
 						</li>
-					</>
+					</div>
 				)}
 
 				{!username && (
 					<li>
 						<Link href="/enter" passHref>
-							<button className="btn-blue">Log In </button>
+							<button className="btn-blue">Log In</button>
 						</Link>
 					</li>
 				)}

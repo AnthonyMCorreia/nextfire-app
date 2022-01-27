@@ -1,11 +1,12 @@
-
 import styles from "../../styles/Post.module.css"
+import ErrorPage from "../404"
 
 import { firestore, getUserWithUsername, postToJSON } from "../../lib/firebase"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import {
 	collection,
 	getDocs,
+	getDoc,
 	collectionGroup,
 	limit,
 	query,
@@ -27,13 +28,18 @@ export async function getStaticProps({ params }) {
 	let path
 
 	if (userDoc) {
-		const postsQuery = query(collection(userDoc.ref, "posts"), limit(1))
+		const posts = collection(userDoc.ref, "posts")
+		const postRef = doc(posts, slug)
 
-		const posts = (await getDocs(postsQuery)).docs.map(postToJSON)
-		post = posts[0]
+		const nonJSONPost = await getDoc(postRef)
 
-		const postRef = doc(userDoc.ref, "posts", slug)
+		if (!nonJSONPost.exists()) {
+			return {
+				notFound: true
+			}
+		}
 
+		post = postToJSON(nonJSONPost)
 		path = postRef.path
 	}
 
@@ -67,25 +73,31 @@ export default function Post(props) {
 	let post = realtimePost || props.post
 
 	return (
-		<main className={styles.container}>
-			<Metatags title={post.title} />
-			<section>
-				<PostContent post={post} />
-			</section>
-			<aside className="card">
-				<p>
-					<strong>{post.heartCount || 0} ❤️</strong>
-				</p>
+		<>
+			{post ? (
+				<main className={styles.container}>
+					<Metatags title={post.title} />
+					<section>
+						<PostContent post={post} />
+					</section>
+					<aside className="card">
+						<p>
+							<strong>{post.heartCount || 0} ❤️</strong>
+						</p>
 
-				<AuthCheck
-					fallback={
-						<Link href="/enter" passHref>
-							<button>❤️ Sign Up</button>
-						</Link>
-					}>
-					<HeartButton postRef={postRef} />
-				</AuthCheck>
-			</aside>
-		</main>
+						<AuthCheck
+							fallback={
+								<Link href="/enter" passHref>
+									<button>❤️ Sign Up</button>
+								</Link>
+							}>
+							<HeartButton postRef={postRef} />
+						</AuthCheck>
+					</aside>
+				</main>
+			) : (
+				<ErrorPage />
+			)}
+		</>
 	)
 }

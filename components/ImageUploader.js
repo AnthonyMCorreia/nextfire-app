@@ -1,3 +1,5 @@
+import styles from "../styles/Admin.module.css"
+
 import { useState } from "react"
 import Loader from "./Loading"
 
@@ -28,17 +30,6 @@ export default function ImageUploader() {
 				setUploading(false)
 			})
 		})
-
-		// Listens to updates to upload task
-		// uploadTask.on("state_changed", (snapshot) => {
-		// 	const pct = (
-		// 		(snapshot.bytesTransferred / snapshot.totalBytes) *
-		// 		100
-		// 	).toFixed(0)
-		// })
-
-		// getDownloadURL(imgRef).then((url) => {
-		// })
 	}
 
 	return (

@@ -69,7 +69,7 @@ export default function Home(props) {
 	}
 
 	return (
-		<main styles={styles}>
+		<main>
 			<PostFeed posts={posts} admin={false} />
 			{!loading && !postsEnd && posts.length > 0 ? (
 				<button onClick={getMorePosts}>Load More</button>

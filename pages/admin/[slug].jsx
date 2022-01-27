@@ -1,6 +1,6 @@
 import styles from "../../styles/Admin.module.css"
 import { firestore, auth, serverTimestamp } from "../../lib/firebase"
-import { collection, doc, updateDoc } from "firebase/firestore"
+import { collection, doc, updateDoc, deleteDoc } from "firebase/firestore"
 
 import AuthCheck from "../../components/AuthCheck"
 import ImageUploader from "../../components/ImageUploader"
@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form"
 import ReactMarkdown from "react-markdown"
 import Link from "next/link"
 import toast from "react-hot-toast"
+import { Modal, Button } from "react-bootstrap"
 
 export default function AdminPostEdit() {
 	return (
@@ -24,6 +25,10 @@ export default function AdminPostEdit() {
 
 function PostManager() {
 	const [preview, setPreview] = useState(false)
+	const [show, setShow] = useState(false)
+
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
 
 	const router = useRouter()
 	const { slug } = router.query
@@ -35,34 +40,66 @@ function PostManager() {
 
 	const [post] = useDocumentData(postRef)
 
-	return (
-		<main className={styles.container}>
-			{post && (
-				<>
-					<section>
-						<h1>{post.title}</h1>
-						<p>ID: {post.slug}</p>
+	const deletePost = async (e) => {
+		e.preventDefault()
 
-						<PostForm
-							postRef={postRef}
-							defaultValues={post}
-							preview={preview}
-						/>
-					</section>
-				</>
-			)}
-			<aside>
-				<h3>Tools</h3>
-				<button onClick={() => setPreview(!preview)}>
-					{preview ? "Edit" : "Preview"}
-				</button>
-				{post ? (
-					<Link href={`/${post.username}/${post.slug}`} passHref>
-						<button className="btn-blue">Live view</button>
-					</Link>
-				) : null}
-			</aside>
-		</main>
+		await deleteDoc(postRef)
+
+		toast.success("Post deleted")
+
+		router.push("/admin")
+	}
+
+	return (
+		<>
+			<main className={styles.container}>
+				{post && (
+					<>
+						<section>
+							<h1>{post.title}</h1>
+							<p>ID: {post.slug}</p>
+
+							<PostForm
+								postRef={postRef}
+								defaultValues={post}
+								preview={preview}
+							/>
+						</section>
+					</>
+				)}
+				{/* Modal, {Header, Title, Body, Footer} */}
+				<aside>
+					<h3>Tools</h3>
+					<button onClick={() => setPreview(!preview)}>
+						{preview ? "Edit" : "Preview"}
+					</button>
+					{post ? (
+						<>
+							<Link href={`/${post.username}/${post.slug}`} passHref>
+								<button className="btn-blue">Live view</button>
+							</Link>
+							<button className="btn btn-primary btn-red" onClick={handleShow}>
+								Delete
+							</button>
+						</>
+					) : null}
+				</aside>
+			</main>
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Delete post</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Are you sure you want to delete this post?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="primary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="red" onClick={deletePost}>
+						Delete
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		</>
 	)
 }
 
@@ -120,7 +157,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 						name="published"
 						type="checkbox"
 						{...register("published")}
-					/>
+					/>{" "}
 					<label htmlFor="published-check">Published</label>
 				</fieldset>
 				<button

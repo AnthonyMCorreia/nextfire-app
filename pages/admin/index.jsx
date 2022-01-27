@@ -23,6 +23,7 @@ import kebabCase from "lodash.kebabcase"
 import toast from "react-hot-toast"
 
 export default function AdminPostsPage(props) {
+
 	return (
 		<main>
 			<AuthCheck>
