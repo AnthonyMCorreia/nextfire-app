@@ -24,7 +24,7 @@ export default function ImageUploader() {
 		setUploading(true)
 
 		// Starts the upload
-		const uploadTask = uploadBytesResumable(imgRef, file).then((url) => {
+		const uploadTask = uploadBytesResumable(imgRef, file).then(() => {
 			getDownloadURL(imgRef).then((url) => {
 				setDownloadURL(url)
 				setUploading(false)

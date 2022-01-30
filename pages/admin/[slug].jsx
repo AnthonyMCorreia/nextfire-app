@@ -1,19 +1,48 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from "../../styles/Admin.module.css"
-import { firestore, auth, serverTimestamp } from "../../lib/firebase"
+
+// import Image from "next/image"
+
+import {
+	firestore,
+	auth,
+	serverTimestamp,
+	getUserPictures,
+	storage
+} from "../../lib/firebase"
 import { collection, doc, updateDoc, deleteDoc } from "firebase/firestore"
+import {
+	getDownloadURL,
+	ref,
+	listALl,
+	listAll,
+	getMetadata
+} from "firebase/storage"
 
 import AuthCheck from "../../components/AuthCheck"
 import ImageUploader from "../../components/ImageUploader"
 
-import { useState } from "react"
+import { useState, useRef, useContext, useEffect } from "react"
 import { useRouter } from "next/router"
 
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { useForm } from "react-hook-form"
+import { GetPics } from "../../lib/hooks"
 import ReactMarkdown from "react-markdown"
 import Link from "next/link"
 import toast from "react-hot-toast"
-import { Modal, Button } from "react-bootstrap"
+import {
+	Modal,
+	Button,
+	Dropdown,
+	Popover,
+	Container,
+	DropdownButton,
+	ListGroup,
+	Image
+} from "react-bootstrap"
+
+import { UserContext } from "../../lib/context"
 
 export default function AdminPostEdit() {
 	return (
@@ -67,23 +96,14 @@ function PostManager() {
 						</section>
 					</>
 				)}
-				{/* Modal, {Header, Title, Body, Footer} */}
-				<aside>
-					<h3>Tools</h3>
-					<button onClick={() => setPreview(!preview)}>
-						{preview ? "Edit" : "Preview"}
-					</button>
-					{post ? (
-						<>
-							<Link href={`/${post.username}/${post.slug}`} passHref>
-								<button className="btn-blue">Live view</button>
-							</Link>
-							<button className="btn btn-primary btn-red" onClick={handleShow}>
-								Delete
-							</button>
-						</>
-					) : null}
-				</aside>
+				{post && (
+					<SideOptions
+						post={post}
+						preview={preview}
+						handleShow={handleShow}
+						setPreview={setPreview}
+					/>
+				)}
 			</main>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
@@ -168,5 +188,62 @@ function PostForm({ defaultValues, postRef, preview }) {
 				</button>
 			</div>
 		</form>
+	)
+}
+
+function SideOptions({ post, preview, handleShow, setPreview }) {
+	const { user, username } = useContext(UserContext)
+	const [show, setShow] = useState(false)
+	const list = GetPics(auth.currentUser.uid)
+
+	const copyImage = (elm) => {
+		const source = elm.target.src
+		navigator.clipboard.writeText(`![alt](${source})`)
+		toast.success("copied to clipboard")
+	}
+
+	return (
+		<>
+			<aside className={styles.asideTools}>
+				<h3>Tools</h3>
+				<button onClick={() => setPreview(!preview)}>
+					{preview ? "Edit" : "Preview"}
+				</button>
+				<Link href={`/${post.username}/${post.slug}`} passHref>
+					<button className="btn-blue">Live view</button>
+				</Link>
+				<button className="btn btn-primary btn-red" onClick={handleShow}>
+					Delete
+				</button>
+				<Button
+					variant="success"
+					id={styles.dropdownBasic}
+					onClick={() => setShow(!show)}>
+					Saved Pictures
+				</Button>
+			</aside>
+			<Modal fullscreen={true} show={show} onHide={() => setShow(false)}>
+				<Modal.Header closeButton>
+					<Modal.Title>
+						Click on an image to copy the code to paste in your post
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body className={styles.imageList}>
+					{list.map(({ link, index }) => {
+						return (
+							<div key={index} className={styles.imageCont}>
+								<img
+									src={link}
+									key={index}
+									alt="profile pic"
+									className={styles.images}
+									onClick={copyImage}
+								/>
+							</div>
+						)
+					})}
+				</Modal.Body>
+			</Modal>
+		</>
 	)
 }

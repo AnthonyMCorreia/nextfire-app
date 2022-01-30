@@ -37,7 +37,7 @@ body {
 
 main {
 	padding: 1rem 10vw;
-	/* height: calc(100vh - 70px); */
+	height: calc(100vh - 70px);
 }
 
 h1 {
@@ -289,4 +289,32 @@ input[type="file"] {
 
 .hidden {
 	display: none;
+}
+
+.picMenu-enter {
+	transform: translateY(-100%);
+	transition: all 0.5s ease;
+
+	width: 100%;
+}
+
+.picMenu-enter-active {
+	transform: translateY(0);
+	transition: all 0.5s ease;
+
+	width: 100%;
+}
+
+.picMenu-exit {
+	transform: translateY(-100px);
+	transition: all 0.5s ease;
+
+	width: 100%;
+}
+
+.picMenu-exit-active {
+	transition: all 0.5s ease;
+	transform: translateY(-100%);
+
+	width: 100%;
 }

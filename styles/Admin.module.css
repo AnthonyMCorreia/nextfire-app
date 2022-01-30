@@ -89,7 +89,43 @@
 	margin-bottom: 1rem;
 }
 
-.downloadLinkBttn {
-	font-size: 100px;
-	color: black;
+.asideTools > * {
+	width: 390px;
+}
+
+.picListCont {
+	overflow: hidden;
+}
+
+#dropdownBasic {
+	z-index: 500;
+}
+
+.imageList {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+
+	border-radius: 10px;
+}
+
+.imageCont {
+	display: inline-block;
+
+	width: 315px;
+	height: 315px;
+	margin: 10px;
+}
+
+.images {
+	margin: 10px;
+	max-height: 300px;
+	max-width: 300px;
+
+	border-radius: 2px;
+}
+
+.images:hover {
+	cursor: pointer;
+	filter: brightness(0.8);
 }
