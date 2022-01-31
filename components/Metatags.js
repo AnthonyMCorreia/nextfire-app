@@ -6,22 +6,20 @@ export default function Page({
 	title = "nextfire"
 }) {
 	return (
-		<main>
-			<Head>
-				<title>{title}</title>
-				<link rel="icon" href={image} />
-				<meta name="description" content={description} />
+		<Head>
+			<title>{title}</title>
+			<link rel="icon" href={image} />
+			<meta name="description" content={description} />
 
-				<meta name="twitter:card" content="summary" />
-				<meta name="twitter:site" content="@nextfire" />
-				<meta meta="twitter:title" content={title} />
-				<meta name="twitter:desciprtion" content={description} />
-				<meta name="twitter:image" content={image} />
+			<meta name="twitter:card" content="summary" />
+			<meta name="twitter:site" content="@nextfire" />
+			<meta meta="twitter:title" content={title} />
+			<meta name="twitter:desciprtion" content={description} />
+			<meta name="twitter:image" content={image} />
 
-				<meta property="og:title" content={title} />
-				<meta property="og:desciprtion" content={description} />
-				<meta property="og:image" content={image} />
-			</Head>
-		</main>
+			<meta property="og:title" content={title} />
+			<meta property="og:desciprtion" content={description} />
+			<meta property="og:image" content={image} />
+		</Head>
 	)
 }

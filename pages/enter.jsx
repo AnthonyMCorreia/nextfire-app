@@ -9,6 +9,8 @@ import { auth, googleAuth, signInRedirect, firestore } from "../lib/firebase"
 import { doc, getDoc, writeBatch } from "firebase/firestore"
 import { signOut } from "firebase/auth"
 
+import googleLogo from "../images/google.png"
+
 export default function EnterPage() {
 	const { user, username } = useContext(UserContext)
 
@@ -38,10 +40,11 @@ function SignInButton() {
 			console.error(err)
 		}
 	}
+	console.log("google")
 
 	return (
 		<button className="btn-google" onClick={signInWithGoogle}>
-			<Image src={"/google.png"} width={32} height={32} alt="google" />
+			<Image src={googleLogo} width={32} height={32} alt="google" />
 			Sign In With Google
 		</button>
 	)
