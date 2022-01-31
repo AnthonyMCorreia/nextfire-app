@@ -40,7 +40,6 @@ function SignInButton() {
 			console.error(err)
 		}
 	}
-	console.log("google")
 
 	return (
 		<button className="btn-google" onClick={signInWithGoogle}>
